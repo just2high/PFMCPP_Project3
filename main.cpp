@@ -258,7 +258,22 @@ struct RockClimber
 
 void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green )
 {
-    //
+    bool x = false, y = false, z = false;
+
+    if( experience * blue.problemGrade >= strength )
+    {
+        x = true;
+    }
+
+    if( experience / red.wallAngle > 5 )
+    {
+        y = true;
+    }
+
+    if( strength / green.crackWidth >= experience )
+    {
+        z = true;
+    }
 }
 
 /*
@@ -285,7 +300,7 @@ struct Hiker
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
 {
     double x = waterWeight + foodWeight + ropeWeight;
-    
+
     return x;
 }
 
