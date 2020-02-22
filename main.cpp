@@ -159,24 +159,27 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
      int height = 15;
      int routes = 20;
 
-    void mountainFeatures( TopRopeRoute face, BoulderProblem base );
+    void mountainFeatures( TopRopeRoute face, BoulderProblem base, double mountain );
 
     void constructMountain( double baseDiameter );
  };
 
-void Mountain::mountainFeatures(TopRopeRoute face, BoulderProblem base )
+void Mountain::mountainFeatures(TopRopeRoute face, BoulderProblem base, double mountain )
 {
        for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
        {
-            face.buildRoute( this->height, ( base.calculateDifficulty( 20.25 ) ) );
+            face.buildRoute( this->height, ( mountain + base.calculateDifficulty( 20.25 ) ) );
        }
 }
 
 void Mountain::constructMountain( double baseDiameter )
 {
+    TopRopeRoute wall;
+    BoulderProblem slab;
+
     double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height;
 
-    mountainFeatures( TopRopeRoute face, BoulderProblem base );
+    mountainFeatures( wall, slab, mountain ); 
 }
 
 /*
