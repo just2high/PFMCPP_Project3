@@ -256,9 +256,9 @@ struct RockClimber
     bool completeCheck ( int difficulty, double experience, double strength );
 };
 
-void RockClimber::climb()
+void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green )
 {
-    
+    //
 }
 
 /*
@@ -276,11 +276,18 @@ struct Hiker
         bool food = true;
         bool rope = true;
         
-        double backpackWeight ( double water, double food, double rope );
+        double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
 
     bool hasBackpack = true;
 };
+
+double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
+{
+    double x = waterWeight + foodWeight + ropeWeight;
+    
+    return x;
+}
 
 /*
  8)
