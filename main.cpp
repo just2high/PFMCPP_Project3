@@ -1,3 +1,5 @@
+ #include <math.h> // include math functions
+
  /*
  Project 3 - Part 2 / 5
  Video: Chapter 2 Part 6
@@ -105,16 +107,17 @@ struct BoulderProblem
     {
         int holdType = 2;
         double holdSize = 0.8; 
+        double holdHeight;
     };
 
-    int calculateDifficulty( double ropeLength );
+    double calculateDifficulty( double ropeLength );
 
     Hold crimp;
 };
 
-int BoulderProblem::calculateDifficulty(double ropeLength)
+double BoulderProblem::calculateDifficulty( double ropeLength )
 {
-    int difficulty = ( ( problemGrade * crimp.holdType ) / crimp.holdSize ) - ropeLength;
+    double difficulty = ( ( problemGrade * crimp.holdType ) / crimp.holdSize ) - ropeLength;
     return difficulty;
 }
 
@@ -125,7 +128,6 @@ int BoulderProblem::calculateDifficulty(double ropeLength)
 struct TopRopeRoute
 {
     double wallAngle = 10;
-    int moves = 32;
 
     struct RouteGrade
     {
@@ -133,10 +135,20 @@ struct TopRopeRoute
         char gradeLetter = 100; // ascii letter 'd'
     };
 
-    void buildRoute( double wallAngle, RouteGrade grade );
+    void buildRoute( int moves, double wallHeight );
 
     RouteGrade hard;
 };
+
+void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
+{
+    BoulderProblem::Hold hold;
+
+    for ( int i = moves; i > 0; i-- )
+    {
+       hold.holdHeight = ( wallHeight / moves ) * i;
+    };
+}
 
 /*
  3)
@@ -149,8 +161,23 @@ struct TopRopeRoute
 
     void mountainFeatures( TopRopeRoute face, BoulderProblem base );
 
-    void constructMountain( int height, int routes );
+    void constructMountain( double baseDiameter );
  };
+
+void Mountain::mountainFeatures(TopRopeRoute face, BoulderProblem base )
+{
+       for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
+       {
+            face.buildRoute( this->height, ( base.calculateDifficulty( 20.25 ) ) );
+       }
+}
+
+void Mountain::constructMountain( double baseDiameter )
+{
+    double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height;
+
+    mountainFeatures( TopRopeRoute face, BoulderProblem base );
+}
 
 /*
  4)
@@ -165,6 +192,24 @@ struct CrackClimb
     int restPoint( int holdNumber, bool isRoof );
 };
 
+int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
+{
+    int x;
+
+    for( int i = 0; i <= 1; i++ )
+    {
+        if( isRoof == false )
+        {
+            x = holdNumber;
+        }
+        else 
+        {
+            x = holdNumber + 1;
+        }
+    }
+    return x;
+}
+
 /*
  5)
  */
@@ -177,8 +222,23 @@ struct Shoe
     int rubberType = 3;
     int agressiveness = 1;
 
-    bool shoeFit( float shoeSize, bool isMale, int painTolerance );
+    bool shoeFit( int painTolerance );
 };
+
+bool Shoe::shoeFit( int painTolerance )
+{
+    bool x;
+
+    if ( painTolerance > shoeSize )
+    {
+        x = true;
+    }
+    else
+    {
+        x = false;    
+    }
+    return x;
+}
 
 /*
  6)
@@ -195,6 +255,11 @@ struct RockClimber
     void climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green );
     bool completeCheck ( int difficulty, double experience, double strength );
 };
+
+void RockClimber::climb()
+{
+    
+}
 
 /*
  7)
