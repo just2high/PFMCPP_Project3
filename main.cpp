@@ -197,7 +197,7 @@ struct CrackClimb
 
 int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
 {
-    int x;
+    int x = 0;
 
     for( int i = 0; i <= 1; i++ )
     {
@@ -230,16 +230,13 @@ struct Shoe
 
 bool Shoe::shoeFit( int painTolerance )
 {
-    bool x;
+    bool x = false;
 
     if ( painTolerance > shoeSize )
     {
         x = true;
     }
-    else
-    {
-        x = false;    
-    }
+
     return x;
 }
 
