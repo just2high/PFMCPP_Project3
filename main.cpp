@@ -13,6 +13,14 @@ Create a branch named Part2
     you should be able to deduce the return type of those functions based on their usage in Person::run()
     You'll need to insert the Person struct from the video in the space below.
  */
+struct Limb
+{
+    int limbLength;
+    int extremitySize;
+
+    int stepForward();
+    int stepSize();
+};
 
 struct Person
 {
@@ -22,17 +30,10 @@ struct Person
     float GPA;
     unsigned int SATScore;
     int distanceTraveled;
+    Limb leftFoot;
+    Limb rightFoot;
 
     void run( bool startWithLeftFoot, int howFast );
-};
-
-struct Limb
-{
-    int limbLength;
-    int extremitySize;
-
-    int stepForward();
-    int stepSize();
 };
 
 int Limb::stepForward()
@@ -52,15 +53,11 @@ int Limb::stepForward()
 
 int Limb::stepSize()
 {
-    int x = ( limbLength + extremitySize ) * stepForward();
-    return x;
+    return ( limbLength + extremitySize ) * stepForward();
 }
 
 void Person::run( bool startWithLeftFoot, int howFast = 1 )
 {
-    Limb leftFoot;
-    Limb rightFoot;
-
     if( startWithLeftFoot == true )
     {
         leftFoot.stepForward();
@@ -117,8 +114,7 @@ struct BoulderProblem
 
 double BoulderProblem::calculateDifficulty( double ropeLength )
 {
-    double difficulty = ( ( problemGrade * crimp.holdType ) / crimp.holdSize ) - ropeLength;
-    return difficulty;
+    return ((problemGrade * crimp.holdType) / crimp.holdSize) - ropeLength;
 }
 
 /*
@@ -146,8 +142,8 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
     for ( int i = moves; i > 0; i-- )
     {
-       hold.holdHeight = ( wallHeight / moves ) * i;
-    };
+         hold.holdHeight = ( wallHeight / moves ) * i;
+    }
 }
 
 /*
@@ -177,7 +173,7 @@ void Mountain::constructMountain( double baseDiameter )
     TopRopeRoute wall;
     BoulderProblem slab;
 
-    double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height;
+    double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height; // included math.h at line 1
 
     mountainFeatures( wall, slab, mountain ); 
 }
@@ -230,14 +226,7 @@ struct Shoe
 
 bool Shoe::shoeFit( int painTolerance )
 {
-    bool x = false;
-
-    if ( painTolerance > shoeSize )
-    {
-        x = true;
-    }
-
-    return x;
+    return painTolerance > shoeSize;
 }
 
 /*
@@ -258,22 +247,11 @@ struct RockClimber
 
 void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green )
 {
-    bool x = false, y = false, z = false;
+    bool x = experience * blue.problemGrade >= strength;
+    bool y = experience / red.wallAngle > 5;
+    bool z = strength / green.crackWidth >= experience;
 
-    if( experience * blue.problemGrade >= strength )
-    {
-        x = true;
-    }
-
-    if( experience / red.wallAngle > 5 )
-    {
-        y = true;
-    }
-
-    if( strength / green.crackWidth >= experience )
-    {
-        z = true;
-    }
+    ignoreUnused( x, y, z )
 }
 
 /*
@@ -299,9 +277,7 @@ struct Hiker
 
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
 {
-    double x = waterWeight + foodWeight + ropeWeight;
-
-    return x;
+    return waterWeight + foodWeight + ropeWeight;
 }
 
 /*
@@ -353,14 +329,7 @@ void Exercise::doExercise ( RockClimber trainee )
 
 bool Exercise::exerciseComplete ( int strength, double stamina )
 {
-    bool x = false;
-
-    if( strength + stamina > muscleGroup * (difficulty * 10))
-    {
-        x = true;
-    }
-
-    return x;
+    return strength + stamina > muscleGroup * (difficulty * 10);
 }
 
 /*
@@ -369,29 +338,29 @@ bool Exercise::exerciseComplete ( int strength, double stamina )
 
 struct TrainingPlan
 {
-    Exercise pushUp;
-    Exercise pullUp;
-    Exercise shoulderPress;
-    Exercise deadLift;
-    Exercise squat;
+     Exercise pushUp;
+     Exercise pullUp;
+     Exercise shoulderPress;
+     Exercise deadLift;
+     Exercise squat;
 
     void createPlan( int intensity, int rounds, double restPeriod );
 };
 
 void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
 {
-    RockClimber trainee;
+     RockClimber trainee;
 
-    restPeriod = restPeriod - intensity;
+     restPeriod = restPeriod - intensity;
 
-    for( int i = rounds; i > 0; i-- )
-    {
-    pushUp.doExercise( trainee );
-    pullUp.doExercise( trainee );
-    shoulderPress.doExercise( trainee );
-    deadLift.doExercise( trainee );
-    squat.doExercise( trainee );
-    }
+     for( int i = rounds; i > 0; i-- )
+     {
+         pushUp.doExercise( trainee );
+         pullUp.doExercise( trainee );
+         shoulderPress.doExercise( trainee );
+         deadLift.doExercise( trainee );
+         squat.doExercise( trainee );
+     }
 }
 
 #include <iostream>
