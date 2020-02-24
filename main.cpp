@@ -345,29 +345,29 @@ bool Exercise::exerciseComplete ( int strength, double stamina )
 
 struct TrainingPlan
 {
-     Exercise pushUp;
-     Exercise pullUp;
-     Exercise shoulderPress;
-     Exercise deadLift;
-     Exercise squat;
+    Exercise pushUp;
+    Exercise pullUp;
+    Exercise shoulderPress;
+    Exercise deadLift;
+    Exercise squat;
 
     void createPlan( int intensity, int rounds, double restPeriod );
 };
 
 void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
 {
-     RockClimber trainee;
+    RockClimber trainee;
 
-     restPeriod = restPeriod - intensity;
+    restPeriod = restPeriod - intensity;
 
-     for( int i = rounds; i > 0; i-- )
-     {
-         pushUp.doExercise( trainee );
-         pullUp.doExercise( trainee );
-         shoulderPress.doExercise( trainee );
-         deadLift.doExercise( trainee );
-         squat.doExercise( trainee );
-     }
+    for( int i = rounds; i > 0; i-- )
+    {
+        pushUp.doExercise( trainee );
+        pullUp.doExercise( trainee );
+        shoulderPress.doExercise( trainee );
+        deadLift.doExercise( trainee );
+        squat.doExercise( trainee );
+    }
 }
 
 
