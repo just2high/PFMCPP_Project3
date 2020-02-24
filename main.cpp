@@ -251,7 +251,9 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
     bool y = experience / red.wallAngle > 5;
     bool z = strength / green.crackWidth >= experience;
 
-    if( x == y == z)
+    if( x == true && 
+        y == true &&
+        z == true )
     {
         std::cout << "I'm ready to climb!\n"; // had to move iostream include to line 2
     }
