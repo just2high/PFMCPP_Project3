@@ -317,6 +317,14 @@ struct Gym
     void setClimbs( int climbsCount, int difficultySpread );
 };
 
+void Gym::setClimbs( int climbsCount, int difficultySpread )
+{
+    for ( int i = climbsCount; i > 0; i-- )
+    {
+        orange.buildRoute( 40, orange.wallAngle * difficultySpread );
+    }
+}
+
 /*
  9)
  */
@@ -328,9 +336,32 @@ struct Exercise
     bool useWeight = false;
 
 
-    void doExercise ( RockClimber trainee, Hiker spotter );
+    void doExercise ( RockClimber trainee );
     bool exerciseComplete ( int strength, double stamina );
 };
+
+void Exercise::doExercise ( RockClimber trainee )
+{
+    int x = difficulty * 10;
+    int setsPossible = 0;
+
+    for ( double i = trainee.strength; i > x; i = i - x )
+    {
+        setsPossible++;
+    }
+}
+
+bool Exercise::exerciseComplete ( int strength, double stamina )
+{
+    bool x = false;
+
+    if( strength + stamina > muscleGroup * (difficulty * 10))
+    {
+        x = true;
+    }
+
+    return x;
+}
 
 /*
  10)
@@ -346,6 +377,11 @@ struct TrainingPlan
 
     void createPlan( int intensity, int rounds, double restPeriod );
 };
+
+void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
+{
+    //
+}
 
 #include <iostream>
 int main()
