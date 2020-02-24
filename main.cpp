@@ -1,3 +1,5 @@
+ #include <math.h> // include math functions
+#include <iostream>
  /*
  Project 3 - Part 2 / 5
  Video: Chapter 2 Part 6
@@ -11,9 +13,63 @@ Create a branch named Part2
     you should be able to deduce the return type of those functions based on their usage in Person::run()
     You'll need to insert the Person struct from the video in the space below.
  */
+struct Limb
+{
+    int limbLength;
+    int extremitySize;
 
+    int stepForward();
+    int stepSize();
+};
 
+struct Person
+{
+    int age;
+    int height;
+    float hairLength;
+    float GPA;
+    unsigned int SATScore;
+    int distanceTraveled;
+    Limb leftFoot;
+    Limb rightFoot;
 
+    void run( bool startWithLeftFoot, int howFast );
+};
+
+int Limb::stepForward()
+{
+    int x;
+    bool forward = true;
+    if( forward == true)
+    {
+        x = 1;
+    }
+    else
+    {
+        x = -1;
+    }
+    return x;
+}
+
+int Limb::stepSize()
+{
+    return ( limbLength + extremitySize ) * stepForward();
+}
+
+void Person::run( bool startWithLeftFoot, int howFast = 1 )
+{
+    if( startWithLeftFoot == true )
+    {
+        leftFoot.stepForward();
+        rightFoot.stepForward();
+    }
+    else
+    {
+        rightFoot.stepForward();
+        leftFoot.stepForward();
+    }
+    distanceTraveled += ( leftFoot.stepSize() + rightFoot.stepSize() ) * howFast; // implemented unused variable in example
+}
 
 
  /*
@@ -37,6 +93,8 @@ send me a DM to check your pull request
  1)
  */
 
+
+
 struct BoulderProblem
 {
     int problemGrade = 3;
@@ -46,12 +104,18 @@ struct BoulderProblem
     {
         int holdType = 2;
         double holdSize = 0.8; 
+        double holdHeight;
     };
 
-    void calculateDifficulty( int problemGrade, Hold hold );
+    double calculateDifficulty( double ropeLength );
 
     Hold crimp;
 };
+
+double BoulderProblem::calculateDifficulty( double ropeLength )
+{
+    return ((problemGrade * crimp.holdType) / crimp.holdSize) - ropeLength;
+}
 
 /*
  2)
@@ -60,7 +124,6 @@ struct BoulderProblem
 struct TopRopeRoute
 {
     double wallAngle = 10;
-    int moves = 32;
 
     struct RouteGrade
     {
@@ -68,10 +131,20 @@ struct TopRopeRoute
         char gradeLetter = 100; // ascii letter 'd'
     };
 
-    void buildRoute( double wallAngle, RouteGrade grade );
+    void buildRoute( int moves, double wallHeight );
 
     RouteGrade hard;
 };
+
+void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
+{
+    BoulderProblem::Hold hold;
+
+    for ( int i = moves; i > 0; i-- )
+    {
+         hold.holdHeight = ( wallHeight / moves ) * i;
+    }
+}
 
 /*
  3)
@@ -82,10 +155,28 @@ struct TopRopeRoute
      int height = 15;
      int routes = 20;
 
-    void mountainFeatures( TopRopeRoute face, BoulderProblem base );
+    void mountainFeatures( TopRopeRoute face, BoulderProblem base, double mountain );
 
-    void constructMountain( int height, int routes );
+    void constructMountain( double baseDiameter );
  };
+
+void Mountain::mountainFeatures(TopRopeRoute face, BoulderProblem base, double mountain )
+{
+       for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
+       {
+            face.buildRoute( this->height, ( mountain + base.calculateDifficulty( 20.25 ) ) );
+       }
+}
+
+void Mountain::constructMountain( double baseDiameter )
+{
+    TopRopeRoute wall;
+    BoulderProblem slab;
+
+    double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height; // included math.h at line 1
+
+    mountainFeatures( wall, slab, mountain ); 
+}
 
 /*
  4)
@@ -100,6 +191,24 @@ struct CrackClimb
     int restPoint( int holdNumber, bool isRoof );
 };
 
+int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
+{
+    int x = 0;
+
+    for( int i = 0; i <= 1; i++ )
+    {
+        if( isRoof == false )
+        {
+            x = holdNumber;
+        }
+        else 
+        {
+            x = holdNumber + 1;
+        }
+    }
+    return x;
+}
+
 /*
  5)
  */
@@ -112,8 +221,13 @@ struct Shoe
     int rubberType = 3;
     int agressiveness = 1;
 
-    bool shoeFit( float shoeSize, bool isMale, int painTolerance );
+    bool shoeFit( int painTolerance );
 };
+
+bool Shoe::shoeFit( int painTolerance )
+{
+    return painTolerance > shoeSize;
+}
 
 /*
  6)
@@ -131,6 +245,24 @@ struct RockClimber
     bool completeCheck ( int difficulty, double experience, double strength );
 };
 
+void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green )
+{
+    bool x = experience * blue.problemGrade >= strength;
+    bool y = experience / red.wallAngle > 5;
+    bool z = strength / green.crackWidth >= experience;
+
+    if( x == true && 
+        y == true &&
+        z == true )
+    {
+        std::cout << "I'm ready to climb!\n"; // had to move iostream include to line 2
+    }
+    else
+    {
+        std::cout << "I'm not ready to climb.\n";
+    }
+}
+
 /*
  7)
  */
@@ -146,11 +278,16 @@ struct Hiker
         bool food = true;
         bool rope = true;
         
-        double backpackWeight ( double water, double food, double rope );
+        double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
 
     bool hasBackpack = true;
 };
+
+double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
+{
+    return waterWeight + foodWeight + ropeWeight;
+}
 
 /*
  8)
@@ -165,6 +302,14 @@ struct Gym
     void setClimbs( int climbsCount, int difficultySpread );
 };
 
+void Gym::setClimbs( int climbsCount, int difficultySpread )
+{
+    for ( int i = climbsCount; i > 0; i-- )
+    {
+        orange.buildRoute( 40, orange.wallAngle * difficultySpread );
+    }
+}
+
 /*
  9)
  */
@@ -176,9 +321,25 @@ struct Exercise
     bool useWeight = false;
 
 
-    void doExercise ( RockClimber trainee, Hiker spotter );
+    void doExercise ( RockClimber trainee );
     bool exerciseComplete ( int strength, double stamina );
 };
+
+void Exercise::doExercise ( RockClimber trainee )
+{
+    int x = difficulty * 10;
+    int setsPossible = 0;
+
+    for ( double i = trainee.strength; i > x; i = i - x )
+    {
+        setsPossible++;
+    }
+}
+
+bool Exercise::exerciseComplete ( int strength, double stamina )
+{
+    return strength + stamina > muscleGroup * (difficulty * 10);
+}
 
 /*
  10)
@@ -195,7 +356,23 @@ struct TrainingPlan
     void createPlan( int intensity, int rounds, double restPeriod );
 };
 
-#include <iostream>
+void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
+{
+    RockClimber trainee;
+
+    restPeriod = restPeriod - intensity;
+
+    for( int i = rounds; i > 0; i-- )
+    {
+        pushUp.doExercise( trainee );
+        pullUp.doExercise( trainee );
+        shoulderPress.doExercise( trainee );
+        deadLift.doExercise( trainee );
+        squat.doExercise( trainee );
+    }
+}
+
+
 int main()
 {
     std::cout << "good to go!" << std::endl;
