@@ -380,7 +380,18 @@ struct TrainingPlan
 
 void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
 {
-    //
+    RockClimber trainee;
+
+    restPeriod = restPeriod - intensity;
+
+    for( int i = rounds; i > 0; i-- )
+    {
+    pushUp.doExercise( trainee );
+    pullUp.doExercise( trainee );
+    shoulderPress.doExercise( trainee );
+    deadLift.doExercise( trainee );
+    squat.doExercise( trainee );
+    }
 }
 
 #include <iostream>
