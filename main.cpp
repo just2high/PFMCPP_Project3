@@ -1,5 +1,5 @@
  #include <math.h> // include math functions
-
+#include <iostream>
  /*
  Project 3 - Part 2 / 5
  Video: Chapter 2 Part 6
@@ -251,7 +251,14 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
     bool y = experience / red.wallAngle > 5;
     bool z = strength / green.crackWidth >= experience;
 
-    ignoreUnused( x, y, z )
+    if( x == y == z)
+    {
+        std::cout << "I'm ready to climb!\n"; // had to move iostream include to line 2
+    }
+    else
+    {
+        std::cout << "I'm not ready to climb.\n";
+    }
 }
 
 /*
@@ -363,7 +370,7 @@ void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
      }
 }
 
-#include <iostream>
+
 int main()
 {
     std::cout << "good to go!" << std::endl;
