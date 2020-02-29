@@ -1,4 +1,5 @@
  #include <math.h> // include math functions
+ #include <typeinfo>
 /*
  Project 3 - Part 3 / 5
  video: Chapter 2 - Part 8
@@ -365,7 +366,7 @@ struct Gym
 
     int rating;
 
-    Gym()
+    Gym() // not sure how to construct with UDTs
     {
         rating = 5;
     }
@@ -414,7 +415,7 @@ void Exercise::doExercise ( RockClimber trainee )
         setsPossible++;
     }
 
-    std::cout << "I can do " << setsPossible << " sets.\n";
+    std::cout << "I did " << setsPossible << " sets of the exercise.\n";
 }
 
 bool Exercise::exerciseComplete ( int strength, double stamina )
@@ -425,6 +426,8 @@ bool Exercise::exerciseComplete ( int strength, double stamina )
     {
         std::cout << "I completed the exercise.\n";
     }
+
+    std::cout << "I couldn't do it.\n";
     return x;
 }
 
@@ -442,11 +445,7 @@ struct TrainingPlan
 
     TrainingPlan() // not sure how to construct with UDTs
     {
-        pushUp;
-        pullUp;
-        shoulderPress;
-        deadLift;
-        squat;
+
     }
 
     void createPlan( int intensity, int rounds, double restPeriod );
