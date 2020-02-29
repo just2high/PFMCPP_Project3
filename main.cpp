@@ -110,12 +110,28 @@ double BoulderProblem::calculateDifficulty( double ropeLength )
 
 struct TopRopeRoute
 {
-    double wallAngle = 10;
+    double wallAngle;
+
+    TopRopeRoute()
+    {
+        wallAngle = 10;
+    }
 
     struct RouteGrade
     {
-        double gradeNumber = 5.10;
-        char gradeLetter = 100; // ascii letter 'd'
+        double gradeNumber;
+        char gradeLetter; 
+        
+        RouteGrade()
+        {
+            gradeNumber = 5.10;
+            gradeLetter = 100; // ascii letter 'd'
+        }
+
+        void printGradeInfo()
+        {
+            std::cout << "Grade is: " << gradeNumber << gradeLetter << std::endl;
+        }
     };
 
     void buildRoute( int moves, double wallHeight );
@@ -131,6 +147,8 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
     {
          hold.holdHeight = ( wallHeight / moves ) * i;
     }
+
+    std::cout << "Wall Angle is: " << wallAngle << std::endl;
 }
 
 /*
@@ -364,11 +382,24 @@ int main()
 {
     Example::main();
 
+    std::cout << "\n**=============================**\n\n";
+
     BoulderProblem blue;
     BoulderProblem::Hold crimp;
 
-    blue.calculateDifficulty( 2.22 );
+    double difficulty = blue.calculateDifficulty( 2.22 );
     crimp.printHoldInfo();
+    std::cout << "Difficulty: " << difficulty << std::endl;
+
+    std::cout << "\n**=============================**\n\n";
+
+    TopRopeRoute red;
+    TopRopeRoute::RouteGrade medium;
+
+    red.buildRoute(10, 40.36);
+    medium.printGradeInfo();
+
+    std::cout << "\n**=============================**\n\n";
 
     std::cout << "good to go!" << std::endl;
 }
