@@ -146,9 +146,8 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
     for ( int i = moves; i > 0; i-- )
     {
          hold.holdHeight = ( wallHeight / moves ) * i;
+         std::cout << "Hold height for move " << i << " is: " << hold.holdHeight << std::endl;
     }
-
-    std::cout << "Wall Angle is: " << wallAngle << std::endl;
 }
 
 /*
@@ -157,8 +156,14 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
  struct Mountain 
  {
-     int height = 15;
-     int routes = 20;
+     int height;
+     int routes;
+
+    Mountain()
+    {
+        height = 15;
+        routes = 20;
+    }
 
     void mountainFeatures( TopRopeRoute face, BoulderProblem base, double mountain );
 
@@ -167,10 +172,14 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
 void Mountain::mountainFeatures(TopRopeRoute face, BoulderProblem base, double mountain )
 {
-       for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
-       {
-            face.buildRoute( this->height, ( mountain + base.calculateDifficulty( 20.25 ) ) );
-       }
+    std::cout << "Mountain height is " << height << " feet and has " << routes << " routes\n";
+
+    for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
+    {
+        std::cout << "Route #" << i << std::endl;
+        
+        face.buildRoute( this->height, ( mountain + base.calculateDifficulty( 20.25 ) ) );
+    }
 }
 
 void Mountain::constructMountain( double baseDiameter )
@@ -179,6 +188,8 @@ void Mountain::constructMountain( double baseDiameter )
     BoulderProblem slab;
 
     double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height; // included math.h at line 1
+
+    std::cout << "The mountain takes up " << mountain << " ft^3 of space.\n";
 
     mountainFeatures( wall, slab, mountain ); 
 }
@@ -398,6 +409,12 @@ int main()
 
     red.buildRoute(10, 40.36);
     medium.printGradeInfo();
+
+    std::cout << "\n**=============================**\n\n";
+
+    Mountain dingbat;
+
+    dingbat.constructMountain( 33.456 );
 
     std::cout << "\n**=============================**\n\n";
 
