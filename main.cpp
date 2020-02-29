@@ -277,12 +277,21 @@ bool Shoe::shoeFit( int painTolerance )
 
 struct RockClimber
 {
-    double experience = 25.87;
-    int age = 33;
-    int height = 167;
-    double strength = 99.28;
-    bool isMale = false;
+    double experience;
+    int age;
+    int height;
+    double strength;
+    bool isMale;
  
+    RockClimber()
+    {
+        experience = 25.87;
+        age = 33;
+        height = 167;
+        strength = 99.28;
+        isMale = false;
+    }
+
     void climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green );
     bool completeCheck ( int difficulty, double experience, double strength );
 };
@@ -419,6 +428,7 @@ int main()
 {
     Example::main();
 
+//1
     std::cout << "\n**=============================**\n\n";
 
     BoulderProblem blue;
@@ -428,6 +438,7 @@ int main()
     crimp.printHoldInfo();
     std::cout << "Difficulty: " << difficulty << std::endl;
 
+//2
     std::cout << "\n**=============================**\n\n";
 
     TopRopeRoute red;
@@ -436,23 +447,38 @@ int main()
     red.buildRoute(10, 40.36);
     medium.printGradeInfo();
 
+//3
     std::cout << "\n**=============================**\n\n";
 
     Mountain dingbat;
 
     dingbat.constructMountain( 33.456 );
 
+//4
     std::cout << "\n**=============================**\n\n";
 
     CrackClimb green;
 
     green.restPoint( 32, false );
 
+//5
     std::cout << "\n**=============================**\n\n";    
 
     Shoe scarpa;
 
     scarpa.shoeFit( 8 );
+
+//6
+    std::cout << "\n**=============================**\n\n";   
+
+    RockClimber Drew;
+
+    Drew.climb(blue, red, green);
+
+//7
+    std::cout << "\n**=============================**\n\n";   
+
+
 
     std::cout << "\n**=============================**\n\n";   
 
