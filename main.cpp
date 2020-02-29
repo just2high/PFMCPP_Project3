@@ -62,14 +62,35 @@ int main()
 
 struct BoulderProblem
 {
-    int problemGrade = 3;
-    double wallAngle = 30;
+    int problemGrade;
+    double wallAngle;
     
+    BoulderProblem()
+    {
+        problemGrade = 3;
+        wallAngle = 30;
+    }
+
     struct Hold
     {
-        int holdType = 2;
-        double holdSize = 0.8; 
+        int holdType;
+        double holdSize; 
         double holdHeight;
+
+        Hold()
+        {
+            holdType = 2;
+            holdSize = 0.8;
+            holdHeight = 1;
+        }
+
+        void printHoldInfo()
+        {
+            std::cout << "Hold Type: " << holdType;
+            std::cout << "\nHold Size: " << holdSize;
+            std::cout << "\nHold Height: " << holdHeight;
+            std::cout << std::endl;
+        }
     };
 
     double calculateDifficulty( double ropeLength );
@@ -79,6 +100,7 @@ struct BoulderProblem
 
 double BoulderProblem::calculateDifficulty( double ropeLength )
 {
+    std::cout << "Calculating difficulty...\n";
     return ((problemGrade * crimp.holdType) / crimp.holdSize) - ropeLength;
 }
 
@@ -341,5 +363,12 @@ void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
 int main()
 {
     Example::main();
+
+    BoulderProblem blue;
+    BoulderProblem::Hold crimp;
+
+    blue.calculateDifficulty( 2.22 );
+    crimp.printHoldInfo();
+
     std::cout << "good to go!" << std::endl;
 }
