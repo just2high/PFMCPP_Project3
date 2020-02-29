@@ -321,22 +321,35 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
 struct Hiker
 {
     RockClimber leader;
-    double stamina = 22.45;
+    double stamina;
+    bool hasBackpack;
+
+    Hiker()
+    {
+        stamina = 22.45;
+        hasBackpack = true;
+    }
 
     struct Backpack 
     {
-        bool water = true;
-        bool food = true;
-        bool rope = true;
+        bool water;
+        bool food;
+        bool rope;
+
+        Backpack()
+        {
+            water = true;
+            food = true;
+            rope = true;
+        }
         
         double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
-
-    bool hasBackpack = true;
 };
 
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
 {
+    std::cout << "I've got my backpack!\n";
     return waterWeight + foodWeight + ropeWeight;
 }
 
@@ -476,6 +489,13 @@ int main()
     Drew.climb(blue, red, green);
 
 //7
+    std::cout << "\n**=============================**\n\n";   
+
+    Hiker::Backpack JanSport;
+
+    JanSport.backpackWeight( 10.32, 34.32, 10.12 );
+
+//8
     std::cout << "\n**=============================**\n\n";   
 
 
