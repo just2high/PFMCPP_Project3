@@ -200,9 +200,16 @@ void Mountain::constructMountain( double baseDiameter )
 
 struct CrackClimb
 {
-    bool isBoulder = false;
-    double crackWidth = 8;
-    int rockColor = 2;
+    bool isBoulder;
+    double crackWidth;
+    int rockColor;
+
+    CrackClimb()
+    {
+        isBoulder = false;
+        crackWidth = 8;
+        rockColor = 2;
+    }
 
     int restPoint( int holdNumber, bool isRoof );
 };
@@ -222,6 +229,8 @@ int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
             x = holdNumber + 1;
         }
     }
+
+    std::cout << "The rest point is at " << x << " feet.\n";
     return x;
 }
 
@@ -417,6 +426,12 @@ int main()
     dingbat.constructMountain( 33.456 );
 
     std::cout << "\n**=============================**\n\n";
+
+    CrackClimb green;
+
+    green.restPoint( 32, false );
+
+    std::cout << "\n**=============================**\n\n";    
 
     std::cout << "good to go!" << std::endl;
 }
