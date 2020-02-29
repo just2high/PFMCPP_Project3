@@ -363,6 +363,13 @@ struct Gym
     TopRopeRoute orange;
     CrackClimb brown;
 
+    int rating;
+
+    Gym()
+    {
+        rating = 5;
+    }
+
     void setClimbs( int climbsCount, int difficultySpread );
 };
 
@@ -382,10 +389,16 @@ void Gym::setClimbs( int climbsCount, int difficultySpread )
 
 struct Exercise
 {
-    int muscleGroup = 6;
-    int difficulty = 3;
-    bool useWeight = false;
+    int muscleGroup;
+    int difficulty;
+    bool useWeight;
 
+    Exercise()
+    {
+        muscleGroup = 6;
+        difficulty = 3;
+        useWeight = false;
+    }
 
     void doExercise ( RockClimber trainee );
     bool exerciseComplete ( int strength, double stamina );
@@ -400,11 +413,19 @@ void Exercise::doExercise ( RockClimber trainee )
     {
         setsPossible++;
     }
+
+    std::cout << "I can do " << setsPossible << " sets.\n";
 }
 
 bool Exercise::exerciseComplete ( int strength, double stamina )
 {
-    return strength + stamina > muscleGroup * (difficulty * 10);
+    bool x = strength + stamina > muscleGroup * (difficulty * 10);
+
+    if( x )
+    {
+        std::cout << "I completed the exercise.\n";
+    }
+    return x;
 }
 
 /*
@@ -418,6 +439,15 @@ struct TrainingPlan
     Exercise shoulderPress;
     Exercise deadLift;
     Exercise squat;
+
+    TrainingPlan() // not sure how to construct with UDTs
+    {
+        pushUp;
+        pullUp;
+        shoulderPress;
+        deadLift;
+        squat;
+    }
 
     void createPlan( int intensity, int rounds, double restPeriod );
 };
@@ -435,6 +465,7 @@ void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
         shoulderPress.doExercise( trainee );
         deadLift.doExercise( trainee );
         squat.doExercise( trainee );
+        std::cout << "Round Complete.\n\n";
     }
 }
 
@@ -504,9 +535,20 @@ int main()
 
     local.setClimbs( 2, 3 );
 
+//9
     std::cout << "\n**=============================**\n\n";   
 
+    Exercise pullUp;
 
+    pullUp.doExercise( Drew );
+    pullUp.exerciseComplete( 15, 22.56 );
+
+//10
+    std::cout << "\n**=============================**\n\n";   
+
+    TrainingPlan DrewsPlan;
+
+    DrewsPlan.createPlan( 3, 3, 33.56 );
 
     std::cout << "\n**=============================**\n\n";   
 
