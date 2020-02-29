@@ -370,6 +370,8 @@ void Gym::setClimbs( int climbsCount, int difficultySpread )
 {
     for ( int i = climbsCount; i > 0; i-- )
     {
+        std::cout << "Gym Route# " << i << std::endl;
+        
         orange.buildRoute( 40, orange.wallAngle * difficultySpread );
     }
 }
@@ -496,6 +498,12 @@ int main()
     JanSport.backpackWeight( 10.32, 34.32, 10.12 );
 
 //8
+    std::cout << "\n**=============================**\n\n";   
+
+    Gym local;
+
+    local.setClimbs( 2, 3 );
+
     std::cout << "\n**=============================**\n\n";   
 
 
