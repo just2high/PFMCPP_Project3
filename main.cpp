@@ -240,18 +240,35 @@ int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
 
 struct Shoe
 {
-    float shoeSize = 8.5f;
-    bool isMale = true;
-    bool isBoot = false;
-    int rubberType = 3;
-    int agressiveness = 1;
+    float shoeSize;
+    bool isMale;
+    bool isBoot;
+    int rubberType;
+    int agressiveness;
+
+    Shoe()
+    {
+        shoeSize = 8.5f;
+        isMale = true;
+        isBoot = false;
+        rubberType = 3;
+        agressiveness = 1;
+    }
 
     bool shoeFit( int painTolerance );
 };
 
 bool Shoe::shoeFit( int painTolerance )
 {
-    return painTolerance > shoeSize;
+    if( painTolerance > shoeSize )
+    {
+        std::cout << "The shoe fits!\n";
+        return true;
+    }
+
+    std::cout << "The shoe doesn't fit!\n";
+
+    return false;
 }
 
 /*
@@ -432,6 +449,12 @@ int main()
     green.restPoint( 32, false );
 
     std::cout << "\n**=============================**\n\n";    
+
+    Shoe scarpa;
+
+    scarpa.shoeFit( 8 );
+
+    std::cout << "\n**=============================**\n\n";   
 
     std::cout << "good to go!" << std::endl;
 }
