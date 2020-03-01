@@ -1,4 +1,5 @@
  #include <math.h> // include math functions
+ #include <typeinfo>
 /*
  Project 3 - Part 3 / 5
  video: Chapter 2 - Part 8
@@ -62,14 +63,35 @@ int main()
 
 struct BoulderProblem
 {
-    int problemGrade = 3;
-    double wallAngle = 30;
+    int problemGrade;
+    double wallAngle;
     
+    BoulderProblem()
+    {
+        problemGrade = 3;
+        wallAngle = 30;
+    }
+
     struct Hold
     {
-        int holdType = 2;
-        double holdSize = 0.8; 
+        int holdType;
+        double holdSize; 
         double holdHeight;
+
+        Hold()
+        {
+            holdType = 2;
+            holdSize = 0.8;
+            holdHeight = 1;
+        }
+
+        void printHoldInfo()
+        {
+            std::cout << "Hold Type: " << holdType;
+            std::cout << "\nHold Size: " << holdSize;
+            std::cout << "\nHold Height: " << holdHeight;
+            std::cout << std::endl;
+        }
     };
 
     double calculateDifficulty( double ropeLength );
@@ -79,6 +101,7 @@ struct BoulderProblem
 
 double BoulderProblem::calculateDifficulty( double ropeLength )
 {
+    std::cout << "Calculating difficulty...\n";
     return ((problemGrade * crimp.holdType) / crimp.holdSize) - ropeLength;
 }
 
@@ -88,12 +111,28 @@ double BoulderProblem::calculateDifficulty( double ropeLength )
 
 struct TopRopeRoute
 {
-    double wallAngle = 10;
+    double wallAngle;
+
+    TopRopeRoute()
+    {
+        wallAngle = 10;
+    }
 
     struct RouteGrade
     {
-        double gradeNumber = 5.10;
-        char gradeLetter = 100; // ascii letter 'd'
+        double gradeNumber;
+        char gradeLetter; 
+        
+        RouteGrade()
+        {
+            gradeNumber = 5.10;
+            gradeLetter = 100; // ascii letter 'd'
+        }
+
+        void printGradeInfo()
+        {
+            std::cout << "Grade is: " << gradeNumber << gradeLetter << std::endl;
+        }
     };
 
     void buildRoute( int moves, double wallHeight );
@@ -108,6 +147,7 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
     for ( int i = moves; i > 0; i-- )
     {
          hold.holdHeight = ( wallHeight / moves ) * i;
+         std::cout << "Hold height for move " << i << " is: " << hold.holdHeight << std::endl;
     }
 }
 
@@ -117,8 +157,14 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
  struct Mountain 
  {
-     int height = 15;
-     int routes = 20;
+    int height;
+    int routes;
+
+    Mountain()
+    {
+        height = 15;
+        routes = 20;
+    }
 
     void mountainFeatures( TopRopeRoute face, BoulderProblem base, double mountain );
 
@@ -127,10 +173,14 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
 void Mountain::mountainFeatures(TopRopeRoute face, BoulderProblem base, double mountain )
 {
-       for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
-       {
-            face.buildRoute( this->height, ( mountain + base.calculateDifficulty( 20.25 ) ) );
-       }
+    std::cout << "Mountain height is " << height << " feet and has " << routes << " routes\n";
+
+    for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
+    {
+        std::cout << "Route #" << i << std::endl;
+        
+        face.buildRoute( this->height, ( mountain + base.calculateDifficulty( 20.25 ) ) );
+    }
 }
 
 void Mountain::constructMountain( double baseDiameter )
@@ -139,6 +189,8 @@ void Mountain::constructMountain( double baseDiameter )
     BoulderProblem slab;
 
     double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height; // included math.h at line 1
+
+    std::cout << "The mountain takes up " << mountain << " ft^3 of space.\n";
 
     mountainFeatures( wall, slab, mountain ); 
 }
@@ -149,9 +201,16 @@ void Mountain::constructMountain( double baseDiameter )
 
 struct CrackClimb
 {
-    bool isBoulder = false;
-    double crackWidth = 8;
-    int rockColor = 2;
+    bool isBoulder;
+    double crackWidth;
+    int rockColor;
+
+    CrackClimb()
+    {
+        isBoulder = false;
+        crackWidth = 8;
+        rockColor = 2;
+    }
 
     int restPoint( int holdNumber, bool isRoof );
 };
@@ -171,6 +230,8 @@ int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
             x = holdNumber + 1;
         }
     }
+
+    std::cout << "The rest point is at " << x << " feet.\n";
     return x;
 }
 
@@ -180,18 +241,35 @@ int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
 
 struct Shoe
 {
-    float shoeSize = 8.5f;
-    bool isMale = true;
-    bool isBoot = false;
-    int rubberType = 3;
-    int agressiveness = 1;
+    float shoeSize;
+    bool isMale;
+    bool isBoot;
+    int rubberType;
+    int agressiveness;
+
+    Shoe()
+    {
+        shoeSize = 8.5f;
+        isMale = true;
+        isBoot = false;
+        rubberType = 3;
+        agressiveness = 1;
+    }
 
     bool shoeFit( int painTolerance );
 };
 
 bool Shoe::shoeFit( int painTolerance )
 {
-    return painTolerance > shoeSize;
+    if( painTolerance > shoeSize )
+    {
+        std::cout << "The shoe fits!\n";
+        return true;
+    }
+
+    std::cout << "The shoe doesn't fit!\n";
+
+    return false;
 }
 
 /*
@@ -200,12 +278,21 @@ bool Shoe::shoeFit( int painTolerance )
 
 struct RockClimber
 {
-    double experience = 25.87;
-    int age = 33;
-    int height = 167;
-    double strength = 99.28;
-    bool isMale = false;
+    double experience;
+    int age;
+    int height;
+    double strength;
+    bool isMale;
  
+    RockClimber()
+    {
+        experience = 25.87;
+        age = 33;
+        height = 167;
+        strength = 99.28;
+        isMale = false;
+    }
+
     void climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green );
     bool completeCheck ( int difficulty, double experience, double strength );
 };
@@ -235,22 +322,35 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
 struct Hiker
 {
     RockClimber leader;
-    double stamina = 22.45;
+    double stamina;
+    bool hasBackpack;
+
+    Hiker()
+    {
+        stamina = 22.45;
+        hasBackpack = true;
+    }
 
     struct Backpack 
     {
-        bool water = true;
-        bool food = true;
-        bool rope = true;
+        bool water;
+        bool food;
+        bool rope;
+
+        Backpack()
+        {
+            water = true;
+            food = true;
+            rope = true;
+        }
         
         double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
-
-    bool hasBackpack = true;
 };
 
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
 {
+    std::cout << "I've got my backpack!\n";
     return waterWeight + foodWeight + ropeWeight;
 }
 
@@ -264,6 +364,13 @@ struct Gym
     TopRopeRoute orange;
     CrackClimb brown;
 
+    int rating;
+
+    Gym() // not sure how to construct with UDTs
+    {
+        rating = 5;
+    }
+
     void setClimbs( int climbsCount, int difficultySpread );
 };
 
@@ -271,6 +378,8 @@ void Gym::setClimbs( int climbsCount, int difficultySpread )
 {
     for ( int i = climbsCount; i > 0; i-- )
     {
+        std::cout << "Gym Route# " << i << std::endl;
+        
         orange.buildRoute( 40, orange.wallAngle * difficultySpread );
     }
 }
@@ -281,10 +390,16 @@ void Gym::setClimbs( int climbsCount, int difficultySpread )
 
 struct Exercise
 {
-    int muscleGroup = 6;
-    int difficulty = 3;
-    bool useWeight = false;
+    int muscleGroup;
+    int difficulty;
+    bool useWeight;
 
+    Exercise()
+    {
+        muscleGroup = 6;
+        difficulty = 3;
+        useWeight = false;
+    }
 
     void doExercise ( RockClimber trainee );
     bool exerciseComplete ( int strength, double stamina );
@@ -299,11 +414,21 @@ void Exercise::doExercise ( RockClimber trainee )
     {
         setsPossible++;
     }
+
+    std::cout << "I did " << setsPossible << " sets of the exercise.\n";
 }
 
 bool Exercise::exerciseComplete ( int strength, double stamina )
 {
-    return strength + stamina > muscleGroup * (difficulty * 10);
+    bool x = strength + stamina > muscleGroup * (difficulty * 10);
+
+    if( x )
+    {
+        std::cout << "I completed the exercise.\n";
+    }
+
+    std::cout << "I couldn't do it.\n";
+    return x;
 }
 
 /*
@@ -317,6 +442,11 @@ struct TrainingPlan
     Exercise shoulderPress;
     Exercise deadLift;
     Exercise squat;
+
+    TrainingPlan() // not sure how to construct with UDTs
+    {
+
+    }
 
     void createPlan( int intensity, int rounds, double restPeriod );
 };
@@ -334,12 +464,96 @@ void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
         shoulderPress.doExercise( trainee );
         deadLift.doExercise( trainee );
         squat.doExercise( trainee );
+        std::cout << "Round Complete.\n\n";
     }
 }
 
+void divider()
+{
+    std::cout << "\n**=============================**\n\n";
+}
 
 int main()
 {
     Example::main();
+
+//1
+    divider();
+
+    BoulderProblem blue;
+    BoulderProblem::Hold crimp;
+
+    double difficulty = blue.calculateDifficulty( 2.22 );
+    crimp.printHoldInfo();
+    std::cout << "Difficulty: " << difficulty << std::endl;
+
+//2
+    divider();
+
+    TopRopeRoute red;
+    TopRopeRoute::RouteGrade medium;
+
+    red.buildRoute(10, 40.36);
+    medium.printGradeInfo();
+
+//3
+    divider();
+
+    Mountain dingbat;
+
+    dingbat.constructMountain( 33.456 );
+
+//4
+    divider();
+
+    CrackClimb green;
+
+    green.restPoint( 32, false );
+
+//5
+    divider();    
+
+    Shoe scarpa;
+
+    scarpa.shoeFit( 8 );
+
+//6
+    divider();   
+
+    RockClimber Drew;
+
+    Drew.climb(blue, red, green);
+
+//7
+    divider();   
+
+    Hiker::Backpack JanSport;
+
+    JanSport.backpackWeight( 10.32, 34.32, 10.12 );
+
+//8
+    divider();   
+
+    Gym local;
+
+    local.setClimbs( 2, 3 );
+
+//9
+    divider();   
+
+    Exercise pullUp;
+
+    pullUp.doExercise( Drew );
+    pullUp.exerciseComplete( 15, 22.56 );
+
+//10
+    divider();   
+
+    TrainingPlan DrewsPlan;
+
+    DrewsPlan.createPlan( 3, 3, 33.56 );
+
+    divider();
+
     std::cout << "good to go!" << std::endl;
 }
