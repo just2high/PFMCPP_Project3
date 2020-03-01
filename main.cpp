@@ -157,8 +157,8 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
  struct Mountain 
  {
-     int height;
-     int routes;
+    int height;
+    int routes;
 
     Mountain()
     {
@@ -468,13 +468,17 @@ void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
     }
 }
 
+void divider()
+{
+    std::cout << "\n**=============================**\n\n";
+}
 
 int main()
 {
     Example::main();
 
 //1
-    std::cout << "\n**=============================**\n\n";
+    divider();
 
     BoulderProblem blue;
     BoulderProblem::Hold crimp;
@@ -484,7 +488,7 @@ int main()
     std::cout << "Difficulty: " << difficulty << std::endl;
 
 //2
-    std::cout << "\n**=============================**\n\n";
+    divider();
 
     TopRopeRoute red;
     TopRopeRoute::RouteGrade medium;
@@ -493,49 +497,49 @@ int main()
     medium.printGradeInfo();
 
 //3
-    std::cout << "\n**=============================**\n\n";
+    divider();
 
     Mountain dingbat;
 
     dingbat.constructMountain( 33.456 );
 
 //4
-    std::cout << "\n**=============================**\n\n";
+    divider();
 
     CrackClimb green;
 
     green.restPoint( 32, false );
 
 //5
-    std::cout << "\n**=============================**\n\n";    
+    divider();    
 
     Shoe scarpa;
 
     scarpa.shoeFit( 8 );
 
 //6
-    std::cout << "\n**=============================**\n\n";   
+    divider();   
 
     RockClimber Drew;
 
     Drew.climb(blue, red, green);
 
 //7
-    std::cout << "\n**=============================**\n\n";   
+    divider();   
 
     Hiker::Backpack JanSport;
 
     JanSport.backpackWeight( 10.32, 34.32, 10.12 );
 
 //8
-    std::cout << "\n**=============================**\n\n";   
+    divider();   
 
     Gym local;
 
     local.setClimbs( 2, 3 );
 
 //9
-    std::cout << "\n**=============================**\n\n";   
+    divider();   
 
     Exercise pullUp;
 
@@ -543,13 +547,13 @@ int main()
     pullUp.exerciseComplete( 15, 22.56 );
 
 //10
-    std::cout << "\n**=============================**\n\n";   
+    divider();   
 
     TrainingPlan DrewsPlan;
 
     DrewsPlan.createPlan( 3, 3, 33.56 );
 
-    std::cout << "\n**=============================**\n\n";   
+    divider();
 
     std::cout << "good to go!" << std::endl;
 }
