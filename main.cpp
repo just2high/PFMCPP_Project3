@@ -97,23 +97,19 @@ double BoulderProblem::calculateDifficulty( double ropeLength )
 
 struct TopRopeRoute
 {
-    double wallAngle;
+    double wallAngle { 10 };
 
-    TopRopeRoute()
-    {
-        wallAngle = 10;
-    }
+   // TopRopeRoute(){} <_- still need constructor if all variables initialized?
 
     struct RouteGrade
     {
         double gradeNumber;
         char gradeLetter; 
         
-        RouteGrade()
-        {
-            gradeNumber = 5.10;
-            gradeLetter = 100; // ascii letter 'd'
-        }
+        RouteGrade() : 
+        gradeNumber( 5.10 ), 
+        gradeLetter( 100 ) // ascii letter 'd' 
+        {}
 
         void printGradeInfo()
         {
@@ -129,6 +125,8 @@ struct TopRopeRoute
 void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 {
     BoulderProblem::Hold hold;
+
+    std::cout << "The wall is at a " << wallAngle << " degree incline.\n";
 
     for ( int i = moves; i > 0; i-- )
     {
