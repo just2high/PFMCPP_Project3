@@ -207,6 +207,7 @@ int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
     }
 
     std::cout << "The rest point is at " << x << " feet.\n";
+    std::cout << "The width of the crack is " << crackWidth << " in.\n";
     return x;
 }
 
