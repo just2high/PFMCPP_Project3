@@ -227,7 +227,7 @@ struct Shoe
 
     void shoeInfo()
     {
-        std::cout << 
+        std::cout << "This size " << shoeSize << ( isBoot ? " boot" : " shoe" ) << " has type " << rubberType << " rubber.\n";
     }
 
     bool shoeFit( int painTolerance );
@@ -490,6 +490,7 @@ int main()
     Shoe scarpa;
 
     scarpa.shoeFit( 8 );
+    scarpa.shoeInfo();
 
 //6
     divider();   
