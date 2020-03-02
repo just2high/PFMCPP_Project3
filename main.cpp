@@ -223,13 +223,11 @@ struct Shoe
     int rubberType;
     int agressiveness;
 
-    Shoe()
+    Shoe() : shoeSize( 8.5f ), isMale ( true ), isBoot ( false ), rubberType ( 3 ), agressiveness ( 1 ) {}
+
+    void shoeInfo()
     {
-        shoeSize = 8.5f;
-        isMale = true;
-        isBoot = false;
-        rubberType = 3;
-        agressiveness = 1;
+        std::cout << 
     }
 
     bool shoeFit( int painTolerance );
