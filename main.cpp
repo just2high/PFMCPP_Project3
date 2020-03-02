@@ -181,16 +181,11 @@ void Mountain::constructMountain( double baseDiameter )
 
 struct CrackClimb
 {
-    bool isBoulder;
+    bool isBoulder { false };
     double crackWidth;
     int rockColor;
 
-    CrackClimb()
-    {
-        isBoulder = false;
-        crackWidth = 8;
-        rockColor = 2;
-    }
+    CrackClimb() : crackWidth( 8 ), rockColor( 2 ) {}
 
     int restPoint( int holdNumber, bool isRoof );
 };
