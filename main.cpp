@@ -61,25 +61,16 @@ struct BoulderProblem
     int problemGrade;
     double wallAngle;
     
-    BoulderProblem()
-    {
-        problemGrade = 3;
-        wallAngle = 30;
-    }
+    BoulderProblem() : problemGrade(3), wallAngle(30) {}
 
     struct Hold
     {
-        int holdType;
+        int holdType { 2 };
         double holdSize; 
         double holdHeight;
 
-        Hold()
-        {
-            holdType = 2;
-            holdSize = 0.8;
-            holdHeight = 1;
-        }
-
+        Hold() : holdSize(0.8), holdHeight(1) {}
+        
         void printHoldInfo()
         {
             std::cout << "Hold Type: " << holdType;
@@ -96,7 +87,7 @@ struct BoulderProblem
 
 double BoulderProblem::calculateDifficulty( double ropeLength )
 {
-    std::cout << "Calculating difficulty...\n";
+    std::cout << "Calculating difficulty for V" << problemGrade << " problem at a " << wallAngle << " degree incline.\n";
     return ((problemGrade * crimp.holdType) / crimp.holdSize) - ropeLength;
 }
 
