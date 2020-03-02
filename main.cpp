@@ -258,17 +258,10 @@ struct RockClimber
     double strength;
     bool isMale;
  
-    RockClimber()
-    {
-        experience = 25.87;
-        age = 33;
-        height = 167;
-        strength = 99.28;
-        isMale = false;
-    }
+    RockClimber() : experience( 25.87 ), age( 33 ), height( 167 ), strength( 99.28 ), isMale( false ) {}
 
     void climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green );
-    bool completeCheck ( int difficulty, double experience, double strength );
+    bool climberCheck ( int difficulty );
 };
 
 void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green )
@@ -287,6 +280,22 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
     {
         std::cout << "I'm not ready to climb.\n";
     }
+}
+
+bool RockClimber::climberCheck( int difficulty )
+{
+    std::cout << "Your strength is: " << strength << " and you have " << experience << ".\n";
+    
+    if( difficulty > strength + experience )
+    {
+        std::cout << "You do not meet the requirements to attempt this climb.\n";
+    
+        return false;
+    }
+
+    std::cout << "You can do this climb.\n";
+
+    return true;
 }
 
 /*
@@ -497,6 +506,7 @@ int main()
 
     RockClimber Drew;
 
+    Drew.climberCheck( 200 );
     Drew.climb(blue, red, green);
 
 //7
