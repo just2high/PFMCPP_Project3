@@ -61,7 +61,7 @@ struct BoulderProblem
     int problemGrade;
     double wallAngle;
     
-    BoulderProblem() : problemGrade(3), wallAngle(30) {}
+    BoulderProblem() : problemGrade( 3 ), wallAngle( 30 ) {}
 
     struct Hold
     {
@@ -69,7 +69,7 @@ struct BoulderProblem
         double holdSize; 
         double holdHeight;
 
-        Hold() : holdSize(0.8), holdHeight(1) {}
+        Hold() : holdSize( 0.8 ), holdHeight( 1 ) {}
         
         void printHoldInfo()
         {
@@ -141,14 +141,10 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
  struct Mountain 
  {
-    int height;
-    int routes;
+    int height { 15 };
+    int routes { 20 };
 
-    Mountain()
-    {
-        height = 15;
-        routes = 20;
-    }
+//    Mountain(){}  // need a constructor if there's nothing in it?
 
     void mountainFeatures( TopRopeRoute face, BoulderProblem base, double mountain );
 
