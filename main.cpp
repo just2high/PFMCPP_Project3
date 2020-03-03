@@ -305,35 +305,30 @@ bool RockClimber::climberCheck( int difficulty )
 struct Hiker
 {
     RockClimber leader;
-    double stamina;
+    double stamina { 22.45 };
     bool hasBackpack;
 
     Hiker()
     {
-        stamina = 22.45;
         hasBackpack = true;
     }
 
     struct Backpack 
     {
-        bool water;
-        bool food;
-        bool rope;
-
-        Backpack()
-        {
-            water = true;
-            food = true;
-            rope = true;
-        }
+        bool water { true };
+        bool food { true };
+        bool rope { true };
         
         double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
+
+
 };
 
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
 {
     std::cout << "I've got my backpack!\n";
+    std::cout << "I am carrying " << ( water ? "water" : "" ) << ( food ? ", food" : "" ) << ( rope ? ", rope" : "" ) << ".\n"; 
     return waterWeight + foodWeight + ropeWeight;
 }
 
