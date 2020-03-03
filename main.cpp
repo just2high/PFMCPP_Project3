@@ -161,7 +161,7 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
     std::cout << "The wall is at a " << wallAngle << " degree incline.\n";
 
-    for ( int i = moves; i > 0; i-- )
+    for ( int i = moves; i > 0; i-- )  // already have a for loop
     {
          hold.holdHeight = ( wallHeight / moves ) * i;
          std::cout << "Hold height for move " << i << " is: " << hold.holdHeight << std::endl;
@@ -188,7 +188,7 @@ void Mountain::mountainFeatures(TopRopeRoute face, BoulderProblem base, double m
 {
     std::cout << "Mountain height is " << height << " feet and has " << routes << " routes\n";
 
-    for ( int i = this->routes; i > 0; i-- ) // not sure if I'm using pointers right
+    for ( int i = this->routes; i > 0; i-- ) // already have a for loop
     {
         std::cout << "Route #" << i << std::endl;
         
@@ -201,7 +201,7 @@ void Mountain::constructMountain( double baseDiameter )
     TopRopeRoute wall;
     BoulderProblem slab;
 
-    double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height; // included math.h at line 1
+    double mountain = M_PI* pow( baseDiameter / 2, 2 ) * this->height;
 
     std::cout << "The mountain takes up " << mountain << " ft^3 of space.\n";
 
@@ -227,7 +227,7 @@ int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
 {
     int x = 0;
 
-    for( int i = 0; i <= 1; i++ )
+    for( int i = 0; i <= 1; i++ )  // already havea  for loop
     {
         if( isRoof == false )
         {
@@ -263,20 +263,21 @@ struct Shoe
         std::cout << "This size " << shoeSize << ( isBoot ? " boot" : " shoe" ) << " has type " << rubberType << " rubber.\n";
     }
 
-    bool shoeFit( int painTolerance );
+    bool shoeFit( float painTolerance );
 };
 
-bool Shoe::shoeFit( int painTolerance )
-{
-    if( painTolerance > shoeSize )
+bool Shoe::shoeFit( float painTolerance ) // modified to become while loop
+{    
+    while ( painTolerance <= shoeSize )
     {
-        std::cout << "The shoe fits!\n";
-        return true;
+        std::cout << "The size " << shoeSize << " shoe doesn't fit!\n";
+
+        shoeSize = shoeSize - 0.5f;
     }
 
-    std::cout << "The shoe doesn't fit!\n";
+    std::cout << "The size " << shoeSize << " shoe fits!\n";
 
-    return false;
+    return true;
 }
 
 /*
@@ -338,7 +339,7 @@ bool RockClimber::climberCheck( int difficulty )
 struct Hiker
 {
     RockClimber leader;
-    double stamina { 22.45 };
+    float stamina { 22.45f }; // converted to float because don't need the precision
     bool hasBackpack;
 
     Hiker()
@@ -355,7 +356,7 @@ struct Hiker
         double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
 
-
+    void Hike( float trailLength ); // new function declaration
 };
 
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
@@ -363,6 +364,20 @@ double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, 
     std::cout << "I've got my backpack!\n";
     std::cout << "I am carrying " << ( water ? "water" : "" ) << ( food ? ", food" : "" ) << ( rope ? ", rope" : "" ) << ".\n"; 
     return waterWeight + foodWeight + ropeWeight;
+}
+
+void Hiker::Hike( float trailLength ) // new function definition
+{
+    int i = 0;
+
+    while ( stamina > trailLength )
+    {
+        stamina = stamina - trailLength;
+
+        i++;
+    }
+
+    std::cout << "I can hike this trail " << i << " times.\n"; 
 }
 
 /*
@@ -389,7 +404,7 @@ void Gym::setClimbs( int climbsCount, int difficultySpread )
 {
     std::cout << "This gym's rating is: " << rating << std::endl;
 
-    for ( int i = climbsCount; i > 0; i-- )
+    for ( int i = climbsCount; i > 0; i-- ) // already have for loop
     {
         std::cout << "Gym Route# " << i << std::endl;
         
@@ -419,7 +434,7 @@ void Exercise::doExercise ( RockClimber trainee )
     int x = difficulty * 10;
     int setsPossible = 0;
 
-    for ( double i = trainee.strength; i > x; i = i - x )
+    for ( double i = trainee.strength; i > x; i = i - x ) // already have for loop
     {
         setsPossible++;
     }
@@ -465,7 +480,7 @@ void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
 
     restPeriod = restPeriod - intensity;
 
-    for( int i = rounds; i > 0; i-- )
+    for( int i = rounds; i > 0; i-- ) // already have for loop
     {
         pushUp.doExercise( trainee );
         pullUp.doExercise( trainee );
@@ -540,6 +555,10 @@ int main()
     Hiker::Backpack JanSport;
 
     JanSport.backpackWeight( 10.32, 34.32, 10.12 );
+
+    Hiker Dan;  // new hiker
+
+    Dan.Hike( 4.5f );  // new function
 
 //8
     divider();   
