@@ -61,25 +61,16 @@ struct BoulderProblem
     int problemGrade;
     double wallAngle;
     
-    BoulderProblem()
-    {
-        problemGrade = 3;
-        wallAngle = 30;
-    }
+    BoulderProblem() : problemGrade( 3 ), wallAngle( 30 ) {}
 
     struct Hold
     {
-        int holdType;
+        int holdType { 2 };
         double holdSize; 
         double holdHeight;
 
-        Hold()
-        {
-            holdType = 2;
-            holdSize = 0.8;
-            holdHeight = 1;
-        }
-
+        Hold() : holdSize( 0.8 ), holdHeight( 1 ) {}
+        
         void printHoldInfo()
         {
             std::cout << "Hold Type: " << holdType;
@@ -96,7 +87,7 @@ struct BoulderProblem
 
 double BoulderProblem::calculateDifficulty( double ropeLength )
 {
-    std::cout << "Calculating difficulty...\n";
+    std::cout << "Calculating difficulty for V" << problemGrade << " problem at a " << wallAngle << " degree incline.\n";
     return ((problemGrade * crimp.holdType) / crimp.holdSize) - ropeLength;
 }
 
@@ -106,23 +97,19 @@ double BoulderProblem::calculateDifficulty( double ropeLength )
 
 struct TopRopeRoute
 {
-    double wallAngle;
+    double wallAngle { 10 };
 
-    TopRopeRoute()
-    {
-        wallAngle = 10;
-    }
+//  TopRopeRoute(){}
 
     struct RouteGrade
     {
         double gradeNumber;
         char gradeLetter; 
         
-        RouteGrade()
-        {
-            gradeNumber = 5.10;
-            gradeLetter = 100; // ascii letter 'd'
-        }
+        RouteGrade() : 
+        gradeNumber( 5.10 ), 
+        gradeLetter( 100 ) // ascii letter 'd' 
+        {}
 
         void printGradeInfo()
         {
@@ -139,6 +126,8 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 {
     BoulderProblem::Hold hold;
 
+    std::cout << "The wall is at a " << wallAngle << " degree incline.\n";
+
     for ( int i = moves; i > 0; i-- )
     {
          hold.holdHeight = ( wallHeight / moves ) * i;
@@ -152,14 +141,10 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
 
  struct Mountain 
  {
-    int height;
-    int routes;
+    int height { 15 };
+    int routes { 20 };
 
-    Mountain()
-    {
-        height = 15;
-        routes = 20;
-    }
+//    Mountain(){}
 
     void mountainFeatures( TopRopeRoute face, BoulderProblem base, double mountain );
 
@@ -196,16 +181,11 @@ void Mountain::constructMountain( double baseDiameter )
 
 struct CrackClimb
 {
-    bool isBoulder;
+    bool isBoulder { false };
     double crackWidth;
     int rockColor;
 
-    CrackClimb()
-    {
-        isBoulder = false;
-        crackWidth = 8;
-        rockColor = 2;
-    }
+    CrackClimb() : crackWidth( 8 ), rockColor( 2 ) {}
 
     int restPoint( int holdNumber, bool isRoof );
 };
@@ -227,6 +207,7 @@ int CrackClimb::restPoint( int holdNumber, bool isRoof = false )
     }
 
     std::cout << "The rest point is at " << x << " feet.\n";
+    std::cout << "The width of the crack is " << crackWidth << " in.\n";
     return x;
 }
 
@@ -242,13 +223,11 @@ struct Shoe
     int rubberType;
     int agressiveness;
 
-    Shoe()
+    Shoe() : shoeSize( 8.5f ), isMale ( true ), isBoot ( false ), rubberType ( 3 ), agressiveness ( 1 ) {}
+
+    void shoeInfo()
     {
-        shoeSize = 8.5f;
-        isMale = true;
-        isBoot = false;
-        rubberType = 3;
-        agressiveness = 1;
+        std::cout << "This size " << shoeSize << ( isBoot ? " boot" : " shoe" ) << " has type " << rubberType << " rubber.\n";
     }
 
     bool shoeFit( int painTolerance );
@@ -279,17 +258,10 @@ struct RockClimber
     double strength;
     bool isMale;
  
-    RockClimber()
-    {
-        experience = 25.87;
-        age = 33;
-        height = 167;
-        strength = 99.28;
-        isMale = false;
-    }
+    RockClimber() : experience( 25.87 ), age( 33 ), height( 167 ), strength( 99.28 ), isMale( false ) {}
 
     void climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green );
-    bool completeCheck ( int difficulty, double experience, double strength );
+    bool climberCheck ( int difficulty );
 };
 
 void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green )
@@ -302,12 +274,28 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
         y == true &&
         z == true )
     {
-        std::cout << "I'm ready to climb!\n"; // had to move iostream include to line 2
+        std::cout << "I'm ready to climb!\n";
     }
     else
     {
         std::cout << "I'm not ready to climb.\n";
     }
+}
+
+bool RockClimber::climberCheck( int difficulty )
+{
+    std::cout << "Your strength is: " << strength << " and you have " << experience << ".\n";
+    
+    if( difficulty > strength + experience )
+    {
+        std::cout << "You do not meet the requirements to attempt this climb.\n";
+    
+        return false;
+    }
+
+    std::cout << "You can do this climb.\n";
+
+    return true;
 }
 
 /*
@@ -317,35 +305,30 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
 struct Hiker
 {
     RockClimber leader;
-    double stamina;
+    double stamina { 22.45 };
     bool hasBackpack;
 
     Hiker()
     {
-        stamina = 22.45;
         hasBackpack = true;
     }
 
     struct Backpack 
     {
-        bool water;
-        bool food;
-        bool rope;
-
-        Backpack()
-        {
-            water = true;
-            food = true;
-            rope = true;
-        }
+        bool water { true };
+        bool food { true };
+        bool rope { true };
         
         double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
+
+
 };
 
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
 {
     std::cout << "I've got my backpack!\n";
+    std::cout << "I am carrying " << ( water ? "water" : "" ) << ( food ? ", food" : "" ) << ( rope ? ", rope" : "" ) << ".\n"; 
     return waterWeight + foodWeight + ropeWeight;
 }
 
@@ -361,7 +344,7 @@ struct Gym
 
     int rating;
 
-    Gym() // not sure how to construct with UDTs
+    Gym()
     {
         rating = 5;
     }
@@ -371,6 +354,8 @@ struct Gym
 
 void Gym::setClimbs( int climbsCount, int difficultySpread )
 {
+    std::cout << "This gym's rating is: " << rating << std::endl;
+
     for ( int i = climbsCount; i > 0; i-- )
     {
         std::cout << "Gym Route# " << i << std::endl;
@@ -387,14 +372,9 @@ struct Exercise
 {
     int muscleGroup;
     int difficulty;
-    bool useWeight;
+    bool useWeight { false };
 
-    Exercise()
-    {
-        muscleGroup = 6;
-        difficulty = 3;
-        useWeight = false;
-    }
+    Exercise() : muscleGroup( 6 ), difficulty( 3 ) {}
 
     void doExercise ( RockClimber trainee );
     bool exerciseComplete ( int strength, double stamina );
@@ -402,6 +382,7 @@ struct Exercise
 
 void Exercise::doExercise ( RockClimber trainee )
 {
+   
     int x = difficulty * 10;
     int setsPossible = 0;
 
@@ -410,6 +391,8 @@ void Exercise::doExercise ( RockClimber trainee )
         setsPossible++;
     }
 
+    std::cout << "This exercise is for muscle group " << muscleGroup << " and " << ( useWeight ? "uses weights.\n" : "does not use weights.\n" );
+ 
     std::cout << "I did " << setsPossible << " sets of the exercise.\n";
 }
 
@@ -438,10 +421,7 @@ struct TrainingPlan
     Exercise deadLift;
     Exercise squat;
 
-    TrainingPlan() // not sure how to construct with UDTs
-    {
-
-    }
+//    TrainingPlan() {};
 
     void createPlan( int intensity, int rounds, double restPeriod );
 };
@@ -511,12 +491,14 @@ int main()
     Shoe scarpa;
 
     scarpa.shoeFit( 8 );
+    scarpa.shoeInfo();
 
 //6
     divider();   
 
     RockClimber Drew;
 
+    Drew.climberCheck( 200 );
     Drew.climb(blue, red, green);
 
 //7
