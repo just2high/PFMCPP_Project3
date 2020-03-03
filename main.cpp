@@ -99,7 +99,7 @@ struct TopRopeRoute
 {
     double wallAngle { 10 };
 
-   // TopRopeRoute(){} <_- still need constructor if all variables initialized?
+//  TopRopeRoute(){}
 
     struct RouteGrade
     {
@@ -144,7 +144,7 @@ void TopRopeRoute::buildRoute( int moves, double wallHeight = 40.36 )
     int height { 15 };
     int routes { 20 };
 
-//    Mountain(){}  // need a constructor if there's nothing in it?
+//    Mountain(){}
 
     void mountainFeatures( TopRopeRoute face, BoulderProblem base, double mountain );
 
@@ -274,7 +274,7 @@ void RockClimber::climb( BoulderProblem blue, TopRopeRoute red, CrackClimb green
         y == true &&
         z == true )
     {
-        std::cout << "I'm ready to climb!\n"; // had to move iostream include to line 2
+        std::cout << "I'm ready to climb!\n";
     }
     else
     {
@@ -344,7 +344,7 @@ struct Gym
 
     int rating;
 
-    Gym() // not sure how to construct with UDTs
+    Gym()
     {
         rating = 5;
     }
@@ -354,6 +354,8 @@ struct Gym
 
 void Gym::setClimbs( int climbsCount, int difficultySpread )
 {
+    std::cout << "This gym's rating is: " << rating << std::endl;
+
     for ( int i = climbsCount; i > 0; i-- )
     {
         std::cout << "Gym Route# " << i << std::endl;
@@ -370,14 +372,9 @@ struct Exercise
 {
     int muscleGroup;
     int difficulty;
-    bool useWeight;
+    bool useWeight { false };
 
-    Exercise()
-    {
-        muscleGroup = 6;
-        difficulty = 3;
-        useWeight = false;
-    }
+    Exercise() : muscleGroup( 6 ), difficulty( 3 ) {}
 
     void doExercise ( RockClimber trainee );
     bool exerciseComplete ( int strength, double stamina );
@@ -385,6 +382,7 @@ struct Exercise
 
 void Exercise::doExercise ( RockClimber trainee )
 {
+   
     int x = difficulty * 10;
     int setsPossible = 0;
 
@@ -393,6 +391,8 @@ void Exercise::doExercise ( RockClimber trainee )
         setsPossible++;
     }
 
+    std::cout << "This exercise is for muscle group " << muscleGroup << " and " << ( useWeight ? "uses weights.\n" : "does not use weights.\n" );
+ 
     std::cout << "I did " << setsPossible << " sets of the exercise.\n";
 }
 
@@ -421,10 +421,7 @@ struct TrainingPlan
     Exercise deadLift;
     Exercise squat;
 
-    TrainingPlan() // not sure how to construct with UDTs
-    {
-
-    }
+//    TrainingPlan() {};
 
     void createPlan( int intensity, int rounds, double restPeriod );
 };
