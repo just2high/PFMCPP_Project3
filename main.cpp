@@ -339,7 +339,7 @@ bool RockClimber::climberCheck( int difficulty )
 struct Hiker
 {
     RockClimber leader;
-    double stamina { 22.45 };
+    float stamina { 22.45f }; // converted to float because don't need the precision
     bool hasBackpack;
 
     Hiker()
@@ -356,7 +356,7 @@ struct Hiker
         double backpackWeight ( double waterWeight, double foodWeight, double ropeWeight );
     };
 
-    void Hike( int trailLength ); // new function declaration
+    void Hike( float trailLength ); // new function declaration
 };
 
 double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, double ropeWeight )
@@ -366,19 +366,18 @@ double Hiker::Backpack::backpackWeight ( double waterWeight, double foodWeight, 
     return waterWeight + foodWeight + ropeWeight;
 }
 
-void Hike( int trailLength ) // new function definition
+void Hiker::Hike( float trailLength ) // new function definition
 {
-    int i = stamina;
-    int h = 0;
+    int i = 0;
 
-    while ( i > trailLength )
+    while ( stamina > trailLength )
     {
-        i = i - trailLength;
+        stamina = stamina - trailLength;
 
-        h++;
+        i++;
     }
 
-    std::cout << "I can hike this trail " << i << "times.\n"; 
+    std::cout << "I can hike this trail " << i << " times.\n"; 
 }
 
 /*
@@ -405,7 +404,7 @@ void Gym::setClimbs( int climbsCount, int difficultySpread )
 {
     std::cout << "This gym's rating is: " << rating << std::endl;
 
-    for ( int i = climbsCount; i > 0; i-- )
+    for ( int i = climbsCount; i > 0; i-- ) // already have for loop
     {
         std::cout << "Gym Route# " << i << std::endl;
         
@@ -435,7 +434,7 @@ void Exercise::doExercise ( RockClimber trainee )
     int x = difficulty * 10;
     int setsPossible = 0;
 
-    for ( double i = trainee.strength; i > x; i = i - x )
+    for ( double i = trainee.strength; i > x; i = i - x ) // already have for loop
     {
         setsPossible++;
     }
@@ -481,7 +480,7 @@ void TrainingPlan::createPlan ( int intensity, int rounds, double restPeriod )
 
     restPeriod = restPeriod - intensity;
 
-    for( int i = rounds; i > 0; i-- )
+    for( int i = rounds; i > 0; i-- ) // already have for loop
     {
         pushUp.doExercise( trainee );
         pullUp.doExercise( trainee );
@@ -559,7 +558,7 @@ int main()
 
     Hiker Dan;  // new hiker
 
-    Dan.Hike( 5 );  // new function
+    Dan.Hike( 4.5f );  // new function
 
 //8
     divider();   
